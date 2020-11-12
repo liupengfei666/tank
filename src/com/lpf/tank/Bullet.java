@@ -8,6 +8,8 @@ public class Bullet {
     public static final int WIDTH = ResourceMgr.bulletD.getWidth();
     public static final int HEIGHT = ResourceMgr.bulletD.getHeight();
 
+    Rectangle rectangle = new Rectangle();
+
     private int x;
     private int y;
     private Dir dir;
@@ -23,6 +25,10 @@ public class Bullet {
         this.dir = dir;
         this.group = group;
         this.tankFrame = tankFrame;
+        rectangle.x = x;
+        rectangle.y = y;
+        rectangle.width = WIDTH;
+        rectangle.height = HEIGHT;
     }
 
     public void paint(Graphics g) {
@@ -66,6 +72,10 @@ public class Bullet {
             default:
                 break;
         }
+        //update rect
+        rectangle.x = x;
+        rectangle.y = y;
+
         if (x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT) {
             live = false;
         }

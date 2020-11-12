@@ -13,6 +13,7 @@ public class Tank {
 
     private Random random = new Random();
     private Group group = Group.BAD;
+    Rectangle rectangle = new Rectangle();
 
     public static final int WIDTH = ResourceMgr.goodTankU.getWidth();
     public static final int HEIGHT = ResourceMgr.goodTankU.getHeight();
@@ -27,6 +28,10 @@ public class Tank {
         this.dir = dir;
         this.group = group;
         this.tankFrame = tankFrame;
+        rectangle.x = x;
+        rectangle.y = y;
+        rectangle.width = WIDTH;
+        rectangle.height = HEIGHT;
     }
 
     public Dir getDir() {
@@ -85,6 +90,10 @@ public class Tank {
             default:
                 break;
         }
+
+        //update rect
+        rectangle.x = x;
+        rectangle.y = y;
 
         if (this.group == Group.BAD && random.nextInt(100) > 95) this.fire();
 
