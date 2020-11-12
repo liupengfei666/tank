@@ -9,7 +9,7 @@ public class Tank {
     private int y;
     private Dir dir = Dir.DOWN;
     private TankFrame tankFrame;
-    private static final int SPEED = 1;
+    private static final int SPEED = 10;
 
     private Random random = new Random();
     private Group group = Group.BAD;
@@ -91,6 +91,15 @@ public class Tank {
         if (group == Group.BAD && random.nextInt(100) > 95) {
             randomDir();
         }
+
+        boundsCheck();
+    }
+
+    private void boundsCheck() {
+        if (this.x < 2) x = 2;
+        if (this.y < 28) y = 28;
+        if (this.x > TankFrame.GAME_WIDTH - Tank.WIDTH) x = TankFrame.GAME_WIDTH - Tank.WIDTH - 2;
+        if (this.y > TankFrame.GAME_HEIGHT - Tank.HEIGHT) y = TankFrame.GAME_HEIGHT - Tank.HEIGHT - 2;
     }
 
     private void randomDir() {
