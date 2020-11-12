@@ -10,8 +10,8 @@ public class TankFrame extends Frame {
     Tank tank = new Tank(200, 400, Dir.DOWN, Group.GOOD,this);
     List<Bullet> list = new ArrayList<>();
     List<Tank> tanks = new ArrayList<>();
+    List<Explodes> explodes = new ArrayList<>();
     static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
-    Explodes explodes = new Explodes(100, 100, this);
 
     public TankFrame() {
         setSize(GAME_WIDTH, GAME_HEIGHT);
@@ -60,14 +60,15 @@ public class TankFrame extends Frame {
         for (int i = 0; i < tanks.size(); i++) {
             tanks.get(i).paint(g);
         }
+        for (int i = 0; i < explodes.size(); i++) {
+            explodes.get(i).paint(g);
+        }
 
         for (int i = 0; i < list.size(); i++) {
             for (int j = 0; j < tanks.size(); j++) {
                 list.get(i).collideWith(tanks.get(j));
             }
         }
-
-        explodes.paint(g);
     }
 
     class MyKeyListener extends KeyAdapter {
