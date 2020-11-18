@@ -29,11 +29,13 @@ public class Bullet {
         rectangle.y = y;
         rectangle.width = WIDTH;
         rectangle.height = HEIGHT;
+
+        tankFrame.bullets.add(this);
     }
 
     public void paint(Graphics g) {
         if (!live) {
-           tankFrame.list.remove(this);
+           tankFrame.bullets.remove(this);
         }
         switch (dir) {
             case LEFT:

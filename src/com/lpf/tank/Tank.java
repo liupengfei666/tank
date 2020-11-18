@@ -5,14 +5,14 @@ import java.util.Random;
 
 public class Tank {
 
-    private int x;
-    private int y;
-    private Dir dir = Dir.DOWN;
-    private TankFrame tankFrame;
+    int x;
+    int y;
+    Dir dir = Dir.DOWN;
+    TankFrame tankFrame;
     private static final int SPEED = 10;
 
     private Random random = new Random();
-    private Group group = Group.BAD;
+    Group group = Group.BAD;
     Rectangle rectangle = new Rectangle();
 
     public static final int WIDTH = ResourceMgr.goodTankU.getWidth();
@@ -20,6 +20,8 @@ public class Tank {
 
     private boolean moving = true;
     private boolean living = true;
+
+    FireStrategy fireStrategy;
 
     public Tank(int x, int y, Dir dir, Group group, TankFrame tankFrame) {
         super();
@@ -32,6 +34,22 @@ public class Tank {
         rectangle.y = y;
         rectangle.width = WIDTH;
         rectangle.height = HEIGHT;
+
+        if (group == Group.GOOD) {
+            String goodFsName = (String) PropertyMgr.get("goodFs");
+            try {
+                fireStrategy = (FireStrategy) Class.forName(goodFsName).newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                String badFsName = (String) PropertyMgr.get("badFs");
+                fireStrategy = (FireStrategy) Class.forName(badFsName).newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public Dir getDir() {
@@ -141,9 +159,7 @@ public class Tank {
     }
 
     public void fire() {
-        int bx = x + Tank.WIDTH / 2 - Bullet.WIDTH;
-        int by = y + Tank.HEIGHT / 2 - Bullet.HEIGHT;
-        tankFrame.list.add(new Bullet(bx, by, dir, this.group, tankFrame));
+        fireStrategy.fire(this);
     }
 
     public void die() {
